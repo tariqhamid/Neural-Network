@@ -45,7 +45,7 @@ namespace TestApp
                     Console.WriteLine("Please enter 0, 1 or 2 to chose which type of learning method you would like to use");
             }
 
-            Console.WriteLine("You can now enter inputs and the neural network will try to solve them");
+            Console.WriteLine("You can now enter inputs and the neural network will try to solve them\ne.g. \"5.9,3.0,5.1,1.8\"");
 
             while (true)
             {
@@ -88,9 +88,9 @@ namespace TestApp
             for (int i = 0; i < weights.Length; i++)
             {
                 if (weights[i] > 0)
-                    Console.Write("+{0:F4} ", weights[i]);
+                    Console.Write("+{0:00.000} ", weights[i]);
                 else
-                    Console.Write("{0:F4} ", weights[i]);
+                    Console.Write("{0:00.000} ", weights[i]);
             }
             Console.WriteLine();
             Console.WriteLine("Done!");
@@ -124,9 +124,9 @@ namespace TestApp
             for (int i = 0; i < weights.Length; i++)
             {
                 if (weights[i] > 0)
-                    Console.Write("+{0:F4} ", weights[i]);
+                    Console.Write("+{0:00.000} ", weights[i]);
                 else
-                    Console.Write("{0:F4} ", weights[i]);
+                    Console.Write("{0:00.000} ", weights[i]);
             }
             Console.WriteLine();
             Console.WriteLine("Done!");
