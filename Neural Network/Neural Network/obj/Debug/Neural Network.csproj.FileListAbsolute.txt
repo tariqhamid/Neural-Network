@@ -1,0 +1,6 @@
+D:\Visual Studio\Neural Network\Neural Network\bin\Debug\Neural Network.dll
+D:\Visual Studio\Neural Network\Neural Network\bin\Debug\Neural Network.pdb
+D:\Visual Studio\Neural Network\Neural Network\obj\Debug\Neural Network.csprojResolveAssemblyReference.cache
+D:\Visual Studio\Neural Network\Neural Network\obj\Debug\Neural Network.dll
+D:\Visual Studio\Neural Network\Neural Network\obj\Debug\Neural Network.pdb
+D:\Visual Studio\Neural Network\Neural Network\bin\Debug\Neural Network.XML

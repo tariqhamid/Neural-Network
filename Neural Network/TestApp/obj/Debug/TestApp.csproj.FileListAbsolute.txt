@@ -1,0 +1,9 @@
+D:\Visual Studio\Neural Network\TestApp\bin\Debug\TestApp.exe.config
+D:\Visual Studio\Neural Network\TestApp\obj\Debug\TestApp.csprojResolveAssemblyReference.cache
+D:\Visual Studio\Neural Network\TestApp\bin\Debug\TestApp.exe
+D:\Visual Studio\Neural Network\TestApp\bin\Debug\TestApp.pdb
+D:\Visual Studio\Neural Network\TestApp\bin\Debug\Neural Network.dll
+D:\Visual Studio\Neural Network\TestApp\bin\Debug\Neural Network.pdb
+D:\Visual Studio\Neural Network\TestApp\obj\Debug\TestApp.exe
+D:\Visual Studio\Neural Network\TestApp\obj\Debug\TestApp.pdb
+D:\Visual Studio\Neural Network\TestApp\bin\Debug\Neural Network.xml
