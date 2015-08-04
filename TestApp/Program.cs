@@ -137,7 +137,7 @@ namespace TestApp
         //Reads the data from text file
         private static double[][] GetData()
         {
-            TextReader read = new StreamReader("data.txt");
+            TextReader read = new StreamReader("../../../data.txt");
             string s = read.ReadToEnd();
             read.Close();
 
