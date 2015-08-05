@@ -474,7 +474,7 @@ namespace NN
 
         #endregion
 
-        #region Private Methods
+        #region Private/Protected Methods
 
         protected static int[] Shuffle(int[] sequence)
         {

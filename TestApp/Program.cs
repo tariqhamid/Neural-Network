@@ -15,7 +15,7 @@ namespace TestApp
             NeuralNetwork nn;
             Console.WriteLine("Please chose a method for learning: ");
             Console.WriteLine("0: Back Propagation");
-            Console.WriteLine("1: Genetic Algorithm (Not Working)");
+            Console.WriteLine("1: Genetic Algorithm");
             Console.WriteLine("2: Particle Swarm Optimisation (Recomended)");
             while (true)
             {
@@ -24,12 +24,13 @@ namespace TestApp
                 {
                     if (str[0] == '0')
                     {
-                        nn = BackProp();
+                        nn = BP();
                         break;
                     }
                     else if (str[0] == '1')
                     {
-                        Console.WriteLine("Currently Genetic Algorithm is not working please select another option.");
+                        nn = GA();
+                        break;
                     }
                     else if (str[0] == '2')
                     {
@@ -50,18 +51,21 @@ namespace TestApp
             while (true)
             {
                 string cmd = Console.ReadLine();
-                string[] str = cmd.Split(',');
-                double[] inputs = new double[str.Length];
+                if (cmd.Length > 7)
+                {
+                    string[] str = cmd.Split(',');
+                    double[] inputs = new double[str.Length];
 
-                for (int i = 0; i < inputs.Length; i++)
-                    inputs[i] = double.Parse(str[i]);
+                    for (int i = 0; i < inputs.Length; i++)
+                        inputs[i] = double.Parse(str[i]);
 
-                double[] output = nn.ComputeResults(inputs);
+                    double[] output = nn.ComputeResults(inputs);
 
-                for (int i = 0; i < output.Length; i++)
-                    Console.Write(output[i] + ", ");
+                    for (int i = 0; i < output.Length; i++)
+                        Console.Write(output[i] + ", ");
 
-                Console.WriteLine();
+                    Console.WriteLine();
+                }
             }
         }
 
@@ -98,7 +102,7 @@ namespace TestApp
             return pso;
         }
 
-        private static NeuralNetwork BackProp()
+        private static NeuralNetwork BP()
         {
             BackPropagation bp = new BackPropagation(4, 7, 3, ActivationType.HyperbolicTangent, ActivationType.Softmax);
 
@@ -132,6 +136,41 @@ namespace TestApp
             Console.WriteLine("Done!");
 
             return bp;
+        }
+
+        private static NeuralNetwork GA()
+        {
+            GeneticAlgorithm ga = new GeneticAlgorithm(4, 7, 3, ActivationType.HyperbolicTangent, ActivationType.Softmax);
+
+            Console.WriteLine("Loading Data");
+
+            double[][] data = GetData();
+
+            Console.WriteLine("Data contains " + data.Length + " results");
+
+            Console.WriteLine("Starting Training");
+
+            ga.Train(data //Data
+                , 5000
+                , 10
+                , 5.5
+                );
+
+            Console.WriteLine("Network Trained");
+            Console.WriteLine("Acuracy on train data: " + ga.Accuracy(data));
+            Console.WriteLine("Final Weights (Rounded): ");
+            double[] weights = ga.GetWeights();
+            for (int i = 0; i < weights.Length; i++)
+            {
+                if (weights[i] > 0)
+                    Console.Write("+{0:00.000} ", weights[i]);
+                else
+                    Console.Write("{0:00.000} ", weights[i]);
+            }
+            Console.WriteLine();
+            Console.WriteLine("Done!");
+
+            return ga;
         }
 
         //Reads the data from text file
