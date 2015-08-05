@@ -151,7 +151,7 @@ namespace TestApp
             Console.WriteLine("Starting Training");
 
             ga.Train(data //Data
-                , 10000
+                , 5000
                 , 20
                 );
 

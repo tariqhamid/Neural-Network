@@ -94,13 +94,11 @@ namespace NN
                 for (int i = 0; i < amount; i++)
                 {
                     double[] weights = nn[order[i]].GetWeights();
-                    for (int j = 0; j < weights.Length; j++)
-                    {
-                        double multiplier = acuracy[order[i]]; // Makes sure as acuracy gets closer to 1 the results change less
-                        double m = (((rnd.NextDouble() - 0.5) * 4) / multiplier);
 
-                        weights[j] = m * (i + 1);
-                    }
+                    double multiplier = acuracy[order[i]]; // Makes sure as acuracy gets closer to 1 the results change less
+                    double m = (((rnd.NextDouble() - 0.5) * 4) / multiplier);
+
+                    weights[rnd.Next(weights.Length)] = m * (i + 1);
 
                     nn[order[i]].SetWeights(weights);
                 }
