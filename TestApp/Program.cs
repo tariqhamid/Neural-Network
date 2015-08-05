@@ -14,8 +14,8 @@ namespace TestApp
         {
             NeuralNetwork nn;
             Console.WriteLine("Please chose a method for learning: ");
-            Console.WriteLine("0: Back Propagation");
-            Console.WriteLine("1: Genetic Algorithm");
+            Console.WriteLine("0: Back Propagation (Fast)");
+            Console.WriteLine("1: Genetic Algorithm (Slow)");
             Console.WriteLine("2: Particle Swarm Optimisation (Recomended)");
             while (true)
             {
@@ -151,9 +151,8 @@ namespace TestApp
             Console.WriteLine("Starting Training");
 
             ga.Train(data //Data
-                , 5000
-                , 30
-                , 5.5
+                , 10000
+                , 20
                 );
 
             Console.WriteLine("Network Trained");

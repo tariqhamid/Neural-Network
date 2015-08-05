@@ -38,7 +38,7 @@ namespace NN
 
         #endregion
 
-        public void Train(double[][] data, int generations, int amount, double mutation)
+        public void Train(double[][] data, int generations, int amount)
         {
             if (amount < 2)
                 throw new Exception("Amount must be bigger or equal to 2");
@@ -73,7 +73,7 @@ namespace NN
                     this.SetWeights(nn[order[0]].GetWeights());
                 }
 
-                //Evolve/Selection
+                //Evolve
                 for (int i = 0; i < amount; i++)
                 {
                     for (int j = i; j < amount; j++)
@@ -86,6 +86,10 @@ namespace NN
                     }
                 }
 
+                //Selection
+                for (int i = 2; i < amount; i++)
+                    nn[order[i]] = nn[order[i % 2]];
+
                 //Mutate
                 for (int i = 0; i < amount; i++)
                 {
@@ -93,9 +97,9 @@ namespace NN
                     for (int j = 0; j < weights.Length; j++)
                     {
                         double multiplier = acuracy[order[i]]; // Makes sure as acuracy gets closer to 1 the results change less
-                        double m = (((rnd.NextDouble() - 0.5) * 2) / multiplier);
+                        double m = (((rnd.NextDouble() - 0.5) * 4) / multiplier);
 
-                        weights[j] = m * mutation * (i + 1);
+                        weights[j] = m * (i + 1);
                     }
 
                     nn[order[i]].SetWeights(weights);
