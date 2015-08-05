@@ -152,7 +152,7 @@ namespace TestApp
 
             ga.Train(data //Data
                 , 5000
-                , 10
+                , 30
                 , 5.5
                 );
 
