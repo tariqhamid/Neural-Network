@@ -7,6 +7,9 @@ namespace NN
     /// <summary>
     /// Uses Genetic Algorithm To Train Neural Network
     /// Genetic algorithm is genrally really slow but they should give the best result.
+    /// <para>
+    /// WARNING: this method is quite random and you might never get the same result once you got with this method but if you keep this running for a long period of time it should find weights that deliver really good output.
+    /// </para>
     /// </summary>
     public class GeneticAlgorithm : NeuralNetwork
     {
@@ -38,7 +41,7 @@ namespace NN
 
         #endregion
 
-        public void Train(double[][] data, int generations, int amount)
+        public void Train(double[][] data, int generations, int amount, int mutation)
         {
             if (amount < 2)
                 throw new Exception("Amount must be bigger or equal to 2");
@@ -73,7 +76,7 @@ namespace NN
                     this.SetWeights(nn[order[0]].GetWeights());
                 }
 
-                //Evolve
+                //Order by acuracy
                 for (int i = 0; i < amount; i++)
                 {
                     for (int j = i; j < amount; j++)
@@ -86,29 +89,15 @@ namespace NN
                     }
                 }
 
-                //Selection
+                //Select good once and replace bad once with good once
                 for (int i = 2; i < amount; i++)
                     nn[order[i]] = nn[order[i % 2]];
 
-                //Mutate
-                for (int i = 0; i < amount; i++)
-                {
-                    double[] weights = nn[order[i]].GetWeights();
-
-                    double multiplier = acuracy[order[i]]; // Makes sure as acuracy gets closer to 1 the results change less
-                    double m = (((rnd.NextDouble() - 0.5) * 4) / multiplier);
-
-                    weights[rnd.Next(weights.Length)] = m * (i + 1);
-
-                    nn[order[i]].SetWeights(weights);
-                }
-
-                
-                //Cross-Over
+                //Cross-Over the best result
                 for (int i = 0; i < (amount / 2); i++)
                 {
                     double[] w1 = nn[order[(i * 2) + 0]].GetWeights();
-                    double[] w2 = nn[order[(i * 2) + 0]].GetWeights();
+                    double[] w2 = nn[order[(i * 2) + 1]].GetWeights();
                     double[] j1 = new double[w1.Length];
                     double[] j2 = new double[w1.Length];
                     for (int j = 0; j < w1.Length; j++)
@@ -126,7 +115,23 @@ namespace NN
                     }
 
                     nn[order[(i * 2) + 0]].SetWeights(j1);
-                    nn[order[(i * 2) + 0]].SetWeights(j2);
+                    nn[order[(i * 2) + 1]].SetWeights(j2);
+                }
+
+                //Mutate a random weight.
+                for (int i = 0; i < amount; i++)
+                {
+                    double[] weights = nn[order[i]].GetWeights();
+
+                    for (int j = 0; j < mutation; j++)
+                    {
+                        double multiplier = acuracy[order[i]]; // Makes sure as acuracy gets closer to 1 the results change less
+                        double m = (((rnd.NextDouble() - 0.5) * 4) / multiplier);
+
+                        weights[rnd.Next(weights.Length)] = m * (i + 1);
+
+                        nn[order[i]].SetWeights(weights);
+                    }
                 }
 
                 Console.Write("\rLearning: " + (g + 1) + "/" + generations + " Acuracy: " + BestAcuracy);

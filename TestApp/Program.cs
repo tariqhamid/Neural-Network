@@ -150,10 +150,10 @@ namespace TestApp
 
             Console.WriteLine("Starting Training");
 
-            ga.Train(data //Data
-                , 5000
-                , 20
-                );
+            ga.Train(data, //Data
+                5000,
+                20,
+                5);
 
             Console.WriteLine("Network Trained");
             Console.WriteLine("Acuracy on train data: " + ga.Accuracy(data));
