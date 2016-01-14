@@ -41,6 +41,7 @@ namespace NN
 
         #endregion
 
+<<<<<<< HEAD
         #region Public Methods
 
         /// <summary>
@@ -50,6 +51,17 @@ namespace NN
         /// <param name="generations">Amount of generations the data has to go to</param>
         /// <param name="amount">The amount of times trainning should be done</param>
         /// <param name="mutation">How much the data should mutate</param>
+=======
+        #region Public Varibles
+
+        /// <summary>
+        /// Use this method to train the neural network
+        /// </summary>
+        /// <param name="data">A array containning the input and output for the neural network to learn</param>
+        /// <param name="generations">How many generations should the algorithm go through</param>
+        /// <param name="amount">Amount of chromosomes</param>
+        /// <param name="mutation">how much should the chromosomes get mutated</param>
+>>>>>>> origin/master
         public void Train(double[][] data, int generations, int amount, int mutation)
         {
             if (amount < 2)
