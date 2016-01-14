@@ -8,7 +8,7 @@ namespace NN
     /// Uses Genetic Algorithm To Train Neural Network
     /// Genetic algorithm is genrally really slow but they should give the best result.
     /// <para>
-    /// WARNING: this method is quite random and you might never get the same result once you got with this method but if you keep this running for a long period of time it should find weights that deliver really good output.
+    /// WARNING: this method is quite random and you might never get the same result once you got with this method but if you keep this running for a long period of time it should find weights that deliver optimal output.
     /// </para>
     /// </summary>
     public class GeneticAlgorithm : NeuralNetwork
@@ -37,10 +37,19 @@ namespace NN
             : base(nn.Input, nn.Hidden, nn.Output, nn.Hidden_Type, nn.Output_Type)
         {
 
-        } 
+        }
 
         #endregion
 
+        #region Public Methods
+
+        /// <summary>
+        /// Train the neural network using genetic algorithm
+        /// </summary>
+        /// <param name="data">The data trainning should be done with</param>
+        /// <param name="generations">Amount of generations the data has to go to</param>
+        /// <param name="amount">The amount of times trainning should be done</param>
+        /// <param name="mutation">How much the data should mutate</param>
         public void Train(double[][] data, int generations, int amount, int mutation)
         {
             if (amount < 2)
@@ -139,5 +148,7 @@ namespace NN
             }
             Console.WriteLine();
         }
+
+        #endregion
     }
 }
