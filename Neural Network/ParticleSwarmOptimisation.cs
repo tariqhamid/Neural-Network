@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NN
 {
@@ -181,6 +179,7 @@ namespace NN
                     }
                 }
                 Console.Write("\rLearning: " + (r + 1) + "/" + repeat);
+                Progress = 100 * (((double)r + 1) / (double)repeat);
                 r++;
             }
             Console.WriteLine();

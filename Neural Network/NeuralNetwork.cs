@@ -4,6 +4,8 @@ using System.Text;
 
 namespace NN
 {
+    public delegate void OnProgressChanged(double percent);
+
     /// <summary>
     /// Please use the following classes instead for creating and training the neural network
     /// BackPropagation
@@ -13,6 +15,25 @@ namespace NN
     public class NeuralNetwork
     {
         #region Variables
+
+        public event OnProgressChanged progressChanged;
+
+        /// <summary>
+        /// Use this event handler to detect how much the data is completed
+        /// </summary>
+        public double Progress
+        {
+            get
+            {
+                return trainProgress;
+            }
+            protected set
+            {
+                trainProgress = value;
+                progressChanged(value);
+            }
+        }
+        private double trainProgress;
 
         /// <summary>
         /// How many nodes are in input layer

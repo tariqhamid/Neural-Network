@@ -147,9 +147,9 @@ namespace TestApp
             Console.WriteLine("Starting Training");
 
             ga.Train(data, //Data
-                5000,
-                20,
-                5);
+                5000, //Generations
+                20, //Population Size
+                5); //Mutation
 
             Console.WriteLine("Network Trained");
             Console.WriteLine("Acuracy on train data: " + ga.Accuracy(data));

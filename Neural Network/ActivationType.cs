@@ -12,23 +12,23 @@ namespace NN
         /// <summary>
         /// Do not recomend this. It skips the activation step
         /// </summary>
-        None,
+        None = 0,
         /// <summary>
         /// Uses logistic sigmoid gives values between 0  and 1
         /// </summary>
-        LogisticSigmoid,
+        LogisticSigmoid = 1,
         /// <summary>
         /// Hyperbolic tangent gives values between -1 and 1
         /// </summary>
-        HyperbolicTangent,
+        HyperbolicTangent = 2,
         /// <summary>
         /// Heaviside step gives either a vlue of 0 or 1
         /// </summary>
-        HeavisideStep,
+        HeavisideStep = 3,
         /// <summary>
         /// Softmax's gives values between 0 and 1. These values also sum up to 1
         /// </summary>
-        Softmax
+        Softmax = 4
     }
 
     /// <summary>

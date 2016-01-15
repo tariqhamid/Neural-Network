@@ -49,7 +49,7 @@ namespace NN
         /// </summary>
         /// <param name="data">A array containning the input and output for the neural network to learn</param>
         /// <param name="generations">How many generations should the algorithm go through</param>
-        /// <param name="amount">Amount of chromosomes</param>
+        /// <param name="amount">Amount of chromosomes/Population Size</param>
         /// <param name="mutation">how much should the chromosomes get mutated</param>
         public void Train(double[][] data, int generations, int amount, int mutation)
         {
@@ -145,6 +145,7 @@ namespace NN
                 }
 
                 Console.Write("\rLearning: " + (g + 1) + "/" + generations + " Acuracy: " + BestAcuracy);
+                Progress = 100 * (((double)g + 1) / (double)generations);
                 g++;
             }
             Console.WriteLine();
