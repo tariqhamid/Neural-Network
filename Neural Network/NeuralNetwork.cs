@@ -1,10 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NN
 {
+    #region Events
+    /// <summary>
+    /// Event handler for trainning the data to let user know progress of the trainning
+    /// </summary>
+    /// <param name="percent">Percent of trainning completed</param>
     public delegate void OnProgressChanged(double percent);
+    #endregion
 
     /// <summary>
     /// Please use the following classes instead for creating and training the neural network
@@ -16,7 +20,10 @@ namespace NN
     {
         #region Variables
 
-        public event OnProgressChanged progressChanged;
+        /// <summary>
+        /// Event handler, Gets called when trainning the data to let user know progress of the trainning
+        /// </summary>
+        public event OnProgressChanged progressChanged = null;
 
         /// <summary>
         /// Use this event handler to detect how much the data is completed
@@ -30,7 +37,10 @@ namespace NN
             protected set
             {
                 trainProgress = value;
-                progressChanged(value);
+                if (progressChanged != null)
+                {
+                    progressChanged(value);
+                }
             }
         }
         private double trainProgress;
@@ -186,6 +196,9 @@ namespace NN
         }
         private double[] outputBiases;
 
+        /// <summary>
+        /// Returns how many weights are there in total
+        /// </summary>
         public int WeightsLength
         {
             get
