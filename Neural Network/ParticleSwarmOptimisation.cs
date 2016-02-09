@@ -80,21 +80,21 @@ namespace NN
             int r = 0;
             double minX = -10.0;
             double maxX = 10.0;
-            double w = 0.729; // inertia weight
-            double c1 = 1.49445; // cognitive weight
-            double c2 = 1.49445; // social weight
-            double r1, r2; // randomizations
+            double w = 0.729; //Inertia weight
+            double c1 = 1.49445; //Cognitive weight
+            double c2 = 1.49445; //Social weight
+            double r1, r2; //Randomizations
             Particle[] swarm = new Particle[particles];
             double[] bestGlobalPosition = new double[numWeights];
             double bestGlobalError = double.MaxValue;
 
+            //Create a bunch of particles with random position and velocity
             for (int i = 0; i < swarm.Length; ++i)
             {
                 double[] randomPosition = new double[numWeights];
                 for (int j = 0; j < randomPosition.Length; ++j)
                 {
-                    randomPosition[j] = (maxX - minX) *
-                      rnd.NextDouble() + minX;
+                    randomPosition[j] = (maxX - minX) * rnd.NextDouble() + minX;
                 }
                 double error = MeanSquaredError(data, randomPosition);
 
@@ -103,8 +103,7 @@ namespace NN
                 {
                     double lo = 0.1 * minX;
                     double hi = 0.1 * maxX;
-                    randomVelocity[j] = (hi - lo) *
-                      rnd.NextDouble() + lo;
+                    randomVelocity[j] = (hi - lo) * rnd.NextDouble() + lo;
                 }
                 swarm[i] = new Particle(randomPosition, error, randomVelocity, randomPosition, error);
                 if (swarm[i].error < bestGlobalError)
@@ -114,64 +113,77 @@ namespace NN
                 }
             }
 
+            //Create a sequence for particles so we can shufle them later on
             int[] sequence = new int[particles];
             for (int i = 0; i < sequence.Length; ++i)
                 sequence[i] = i;
 
             while (r < repeat)
             {
-                if (bestGlobalError < exitError) break;
-                sequence = Shuffle(sequence, rnd); // randomize particle order
+                if (bestGlobalError < exitError)
+                    break;
+
+                //Randomize particle order
+                sequence = Shuffle(sequence, rnd);
                 double[] newVelocity = new double[numWeights];
                 double[] newPosition = new double[numWeights];
-                double newError; // step 3
+                double newError;
                 for (int pi = 0; pi < swarm.Length; ++pi)
                 {
                     int i = sequence[pi];
                     Particle currP = swarm[i];
+                    //Calculate Velocity
                     for (int j = 0; j < currP.velocity.Length; ++j)
                     {
                         r1 = rnd.NextDouble();
                         r2 = rnd.NextDouble();
-                        newVelocity[j] = (w * currP.velocity[j]) +
-                         (c1 * r1 * (currP.bestPosition[j] - currP.position[j])) +
+                        newVelocity[j] = (w * currP.velocity[j]) + 
+                          (c1 * r1 * (currP.bestPosition[j] - currP.position[j])) +
                           (c2 * r2 * (bestGlobalPosition[j] - currP.position[j]));
                     }
                     newVelocity.CopyTo(currP.velocity, 0);
 
+                    //Calculate Position
                     for (int j = 0; j < currP.position.Length; ++j)
                     {
                         newPosition[j] = currP.position[j] + newVelocity[j];
-                        if (newPosition[j] < minX) // keep in range
-
+                        //Keep in range
+                        if (newPosition[j] < minX) 
                             newPosition[j] = minX;
                         else if (newPosition[j] > maxX)
                             newPosition[j] = maxX;
                     }
                     newPosition.CopyTo(currP.position, 0);
+
+                    //Get Best Error/Position
                     newError = MeanSquaredError(data, newPosition);
                     currP.error = newError;
-                    if (newError < currP.bestError) // particle best?
+                    //particle best?
+                    if (newError < currP.bestError) 
                     {
                         newPosition.CopyTo(currP.bestPosition, 0);
                         currP.bestError = newError;
                     }
-                    if (newError < bestGlobalError) // global best?
+                    //global best?
+                    if (newError < bestGlobalError) 
                     {
                         newPosition.CopyTo(bestGlobalPosition, 0);
                         bestGlobalError = newError;
                     }
+
+                    //Use Particle Death Probability And Randomly Kill It
                     double die = rnd.NextDouble();
                     if (die < deathProbability)
                     {
-                        // new position, leave velocity, update error
+                        //new position, leave velocity, update error
                         for (int j = 0; j < currP.position.Length; ++j)
                             currP.position[j] = (maxX - minX) * rnd.NextDouble() + minX;
                         currP.error = MeanSquaredError(data, currP.position);
                         currP.position.CopyTo(currP.bestPosition, 0);
                         currP.bestError = currP.error;
 
-                        if (currP.error < bestGlobalError) // global best?
+                        //global best?
+                        if (currP.error < bestGlobalError)
                         {
                             bestGlobalError = currP.error;
                             currP.position.CopyTo(bestGlobalPosition, 0);
