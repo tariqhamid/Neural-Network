@@ -52,7 +52,7 @@ namespace NeuralNetwork
                 {
                     for (int k = 0; k < neurons[i + 1].Length; k++)
                     {
-                        charges[k] += synapsis[i][k].weight * neurons[i][j].charge;
+                        charges[k] += synapsis[i][synCounter].weight * neurons[i][j].charge;
                         synCounter++;
                     }
                 }
