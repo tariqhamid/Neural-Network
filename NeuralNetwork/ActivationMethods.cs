@@ -15,7 +15,7 @@ namespace NeuralNetwork
 
     public class ActivationMethods
     {
-        public float[] Activation(float[] xValues, ActivationType type)
+        public static float[] Activation(float[] xValues, ActivationType type)
         {
             float[] rtn = new float[xValues.Length];
             switch (type)
@@ -42,17 +42,17 @@ namespace NeuralNetwork
             }
         }
 
-        private float LogisticSigmoid(float values)
+        private static float LogisticSigmoid(float values)
         {
             return 1.0f / (1.0f + Convert.ToSingle(Math.Exp(-values)));
         }
 
-        private float HyperbolidTangent(float values)
+        private static float HyperbolidTangent(float values)
         {
             return Convert.ToSingle(Math.Tanh(values));
         }
 
-        private float HeavisideStep(float values)
+        private static float HeavisideStep(float values)
         {
             if (values < 0)
                 return 0;
@@ -60,7 +60,7 @@ namespace NeuralNetwork
                 return 1;
         }
 
-        private float[] Softmax(float[] values)
+        private static float[] Softmax(float[] values)
         {
             // determine max output sum
             // does all output nodes at once so scale doesn't have to be re-computed each time
