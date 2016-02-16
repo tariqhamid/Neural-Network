@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeuralNetwork
 {
@@ -25,7 +23,7 @@ namespace NeuralNetwork
         public float[] Compute(float[][] xValues)
         {
             if (xValues.Length != networks.Length - 1)
-                throw new Exception("input's length length doesn't match RNN");
+                throw new Exception("input's length doesn't match RNN");
 
             float[][] outputs = new float[xValues.Length][];
             outputs[0] = networks[0].Compute(xValues[0]);
@@ -35,7 +33,6 @@ namespace NeuralNetwork
 
             return networks[networks.Length - 1].Compute(outputs[outputs.Length - 1]);
         }
-
 
         private float[] CombineLayers(float[] input, float[] hidden)
         {
