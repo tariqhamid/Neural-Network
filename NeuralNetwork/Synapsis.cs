@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NeuralNetwork
+﻿namespace NeuralNetwork
 {
     public struct Synapsis
     {
@@ -8,12 +6,11 @@ namespace NeuralNetwork
         public int start;
         public int end;
 
-        public Synapsis(int start, int end)
+        public Synapsis(int start, int end, float weight)
         {
             this.start = start;
             this.end = end;
-            Random rnd = new Random();
-            weight = Convert.ToSingle(rnd.NextDouble());
+            this.weight = weight;
         }
     }
 }

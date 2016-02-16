@@ -1,17 +1,53 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NeuralNetwork
 {
     public class Network
     {
-        public Neuron[][] neurons;
-        public Synapsis[][] synapsis;
-        private int[] layers;
+        #region Getters & Setters
 
-        public Network(int[] layers)
+        public Neuron[][] Neurons
         {
+            get
+            {
+                return neurons;
+            }
+            protected set
+            {
+                neurons = value;
+            }
+        }
+
+        public Synapsis[][] Synapsis
+        {
+            get
+            {
+                return synapsis;
+            }
+            protected set
+            {
+                synapsis = value;
+            }
+        }
+
+        #endregion
+
+        #region Variables
+
+        private Neuron[][] neurons;
+        private Synapsis[][] synapsis;
+        protected int[] layers;
+        protected Random random;
+
+        #endregion
+
+        #region Constructors
+
+        public Network(int[] layers, bool connectAllNodes)
+        {
+            if (layers.Length < 3)
+                throw new Exception("There needs to be atleast 2 layers");
+
             this.layers = layers;
 
             neurons = new Neuron[layers.Length][];
@@ -23,19 +59,56 @@ namespace NeuralNetwork
                 neurons[l] = new Neuron[layers[l]];
                 for (int i = 0; i < layers[l]; i++)
                 {
-                    neurons[l][i] = new Neuron();
+                    neurons[l][i] = new Neuron(ActivationType.HyperbolicTangent, Convert.ToSingle(random.NextDouble()), Convert.ToSingle(random.NextDouble()));
                 }
             }
 
             //Setup Synapsis
             for (int i = 0; i < layers.Length - 1; i++)
             {
-                AddConnection(i, i + 1, true);
+                AddConnection(i, i + 1, connectAllNodes);
             }
         }
 
+        public Network(int[] layers, ActivationType[] activationMethods, bool connectAllNodes)
+        {
+            if (layers.Length < 3)
+                throw new Exception("There needs to be atleast 2 layers");
+
+            if (layers.Length != activationMethods.Length)
+                throw new Exception("Activation Methods length doesn't equal layers length");
+
+            this.layers = layers;
+
+            neurons = new Neuron[layers.Length][];
+            synapsis = new Synapsis[layers.Length - 1][];
+
+            //Setup Neurons
+            for (int l = 0; l < layers.Length; l++)
+            {
+                neurons[l] = new Neuron[layers[l]];
+                for (int i = 0; i < layers[l]; i++)
+                {
+                    neurons[l][i] = new Neuron(activationMethods[l], Convert.ToSingle(random.NextDouble()), Convert.ToSingle(random.NextDouble()));
+                }
+            }
+
+            //Setup Synapsis
+            for (int i = 0; i < layers.Length - 1; i++)
+            {
+                AddConnection(i, i + 1, connectAllNodes);
+            }
+        }
+
+        #endregion
+
+        #region Public Methods
+
         public float[] Compute(float[] xValues)
         {
+            if (xValues.Length != layers[0])
+                throw new Exception("X Values length doesn't match amount of input nodes");
+
             //Setup Input Layer
             for (int i = 0; i < xValues.Length; i++)
             {
@@ -75,6 +148,10 @@ namespace NeuralNetwork
             return yValues;
         }
 
+        #endregion
+
+        #region Private Methods
+
         private void AddConnection(int startLayer, int endLayer, bool connectAllNodes)
         {
             synapsis[startLayer] = new Synapsis[layers[startLayer] * layers[endLayer]];
@@ -83,7 +160,7 @@ namespace NeuralNetwork
             {
                 for (int j = 0; j < neurons[endLayer].Length; j++)
                 {
-                    synapsis[startLayer][synCounter] = new Synapsis(i, j);
+                    synapsis[startLayer][synCounter] = new Synapsis(i, j, Convert.ToSingle(random.NextDouble()));
                     if (!connectAllNodes)
                     {
                         //Set weights to 0 for some synapsis
@@ -92,5 +169,7 @@ namespace NeuralNetwork
                 }
             }
         }
+
+        #endregion
     }
 }

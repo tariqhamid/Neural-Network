@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NeuralNetwork
+﻿namespace NeuralNetwork
 {
     public struct Neuron
     {
@@ -8,12 +6,11 @@ namespace NeuralNetwork
         public float bias;
         public ActivationType activation;
 
-        public Neuron(ActivationType activation)
+        public Neuron(ActivationType activation, float charge, float bias)
         {
             this.activation = activation;
-            Random rnd = new Random();
-            charge = Convert.ToSingle(rnd.NextDouble());
-            bias = Convert.ToSingle(rnd.NextDouble());
+            this.charge = charge;
+            this.bias = bias;
         }
     }
 }
