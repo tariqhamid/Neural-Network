@@ -31,10 +31,11 @@ namespace NeuralNetwork
             outputs[0] = networks[0].Compute(xValues[0]);
 
             for (int i = 1; i < xValues.Length - 1; i++)
-                outputs[i] = networks[1].Compute(CombineLayers(xValues[i], outputs[i - 1]));
+                outputs[i] = networks[i].Compute(CombineLayers(xValues[i], outputs[i - 1]));
 
-            return networks[3].Compute(outputs[outputs.Length - 1]);
+            return networks[networks.Length - 1].Compute(outputs[outputs.Length - 1]);
         }
+
 
         private float[] CombineLayers(float[] input, float[] hidden)
         {
