@@ -38,6 +38,7 @@
     <Compile Include="ActivationMethods.cs" />
     <Compile Include="Network.cs" />
     <Compile Include="Neuron.cs" />
+    <Compile Include="ParticleSwarmOptimisation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RNN.cs" />
     <Compile Include="Synapsis.cs" />

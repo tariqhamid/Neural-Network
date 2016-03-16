@@ -30,6 +30,60 @@ namespace NeuralNetwork
             }
         }
 
+        public float[] Weights
+        {
+            get
+            {
+                float[] rtn = new float[(neurons.Length * neurons[0].Length) + (synapsis.Length * synapsis[0].Length)];
+
+                int k = 0;
+                for (int i = 0; i < synapsis.Length; i++)
+                {
+                    for (int j = 0; j < synapsis[i].Length; j++)
+                    {
+                        rtn[k] = synapsis[i][j].weight;
+                        k++;
+                    }
+                }
+
+                for (int i = 0; i < neurons.Length; i++)
+                {
+                    for (int j = 0; j < neurons[i].Length; j++)
+                    {
+                        rtn[k] = neurons[i][j].bias;
+                        k++;
+                    }
+                }
+
+                return rtn;
+            }
+            set
+            {
+                int len = (neurons.Length * neurons[0].Length) + (synapsis.Length * synapsis[0].Length);
+                if (value.Length != len)
+                    throw new Exception("Weights length does not match synapsis & neurons");
+
+                int k = 0;
+                for (int i = 0; i < synapsis.Length; i++)
+                {
+                    for (int j = 0; j < synapsis[i].Length; j++)
+                    {
+                        synapsis[i][j].weight = value[k];
+                        k++;
+                    }
+                }
+
+                for (int i = 0; i < neurons.Length; i++)
+                {
+                    for (int j = 0; j < neurons[i].Length; j++)
+                    {
+                        neurons[i][j].bias = value[k];
+                        k++;
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region Variables
@@ -104,7 +158,7 @@ namespace NeuralNetwork
 
         #region Public Methods
 
-        public float[] Compute(float[] xValues)
+        public virtual float[] Compute(float[] xValues)
         {
             if (xValues.Length != layers[0])
                 throw new Exception("X Values length doesn't match amount of input nodes");
